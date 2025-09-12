@@ -3,15 +3,23 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PostController;
 
 Route::group([
-    'prefix' => 'user'
+    'prefix' => 'users'
 ], function () {
-    Route::post('/create', [UserController::class, 'store']);
+    Route::post('', [UserController::class, 'store']);
 });
 
 Route::group([
     'prefix' => 'auth'
 ], function () {
     Route::post('/login', [AuthController::class, 'login']);
+});
+
+Route::group([
+    'prefix' => 'posts'
+], function () {
+    Route::get('', [PostController::class, 'index']);
+    Route::post('', [PostController::class, 'store']);
 });
