@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
+use App\Http\Requests\VerifyCodeRequest;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,5 +31,17 @@ class AuthController extends Controller
                 'bearer_token' => $this->authService->createJWT($request)
             ]
         ]);
+    }
+
+    public function verifyCode(VerifyCodeRequest $request)
+    {
+        if ($this->authService->verifyCode($request)) {
+            return response()->json([
+                'message' => 'Вы подтвердили учётную запись'
+            ]);
+        }
+        return response()->json([
+            'message' => 'Неверный код подтверждения'
+        ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

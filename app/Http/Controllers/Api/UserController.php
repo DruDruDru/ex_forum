@@ -18,10 +18,10 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        $user = $this->userService->registerUser($request->all());
+        $this->userService->registerUser($request);
 
         return response()->json([
-            'data' => $user,
+            'message' => 'На вашу почту отправлен код подтверждения',
         ], Response::HTTP_CREATED);
     }
 }

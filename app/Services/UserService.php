@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Mail\EmailVerificationMail;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 class UserService
 {
     protected $user;
@@ -13,10 +15,16 @@ class UserService
         $this->user = $user;
     }
 
-    public function registerUser(array $data)
+    public function registerUser($request): void
     {
-        $user = $this->user::create($data);
+        $this->user::create($request->all());
 
-        return $user;
+        $email = $request->input('email');
+
+        $code = rand(100000, 999999);
+
+        Cache::put("email_verification:$email", $code, 300);
+
+        Mail::to($email)->send(new EmailVerificationMail($code));
     }
 }

@@ -14,7 +14,9 @@ Route::group([
 Route::group([
     'prefix' => 'auth'
 ], function () {
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])
+        ->middleware('login');
+    Route::post('/verify', [AuthController::class, 'verifyCode']);
 });
 
 Route::group([
