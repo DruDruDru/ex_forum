@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Comment extends Model
 {
     protected $fillable = [
-        'title',
         'content',
         'user_id',
-        'image_path'
+        'post_id'
     ];
 
     public function user()
@@ -18,9 +17,9 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function comments()
+    public function post()
     {
-        return $this->hasMany(Comment::class);
+        return $this->belongsTo(Post::class);
     }
 
     public static function posses($id): bool
@@ -30,5 +29,12 @@ class Post extends Model
             return true;
         }
         return false;
+    }
+
+    protected static function boot()
+    {
+        self::creating(fn($comment) => $comment->updated_at = null);
+
+        parent::boot();
     }
 }

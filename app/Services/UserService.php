@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Jobs\SendEmailJob;
 use App\Mail\EmailVerificationMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
@@ -25,6 +26,6 @@ class UserService
 
         Cache::put("email_verification:$email", $code, 300);
 
-        Mail::to($email)->send(new EmailVerificationMail($code));
+        SendEmailJob::dispatch($email, $code);
     }
 }
