@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\VerifyCodeRequest;
 use App\Services\AuthService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +20,7 @@ class AuthController extends Controller
 
     public function login(AuthRequest $request)
     {
-        if (!Auth::attempt($request->only(['email', 'password']))) {
+        if (!Auth::guard('web')->attempt($request->only(['email', 'password']))) {
             return response()->json([
                 'message' => 'Неверный пароль и/или электронная почта'
             ], Response::HTTP_UNAUTHORIZED);

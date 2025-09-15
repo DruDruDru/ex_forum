@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\LoginMiddleware;
+use App\Http\Middleware\ApiAuthMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -13,7 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
         apiPrefix: '/api'
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->alias(['login' => LoginMiddleware::class]);
+        $middleware->alias([
+            'login' => LoginMiddleware::class,
+            'auth.api' => ApiAuthMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

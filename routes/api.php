@@ -20,8 +20,10 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'posts'
+    'prefix' => 'posts',
+    'middleware' => 'auth.api'
 ], function () {
     Route::get('', [PostController::class, 'index']);
+    Route::get('{post_id}', [PostController::class, 'get']);
     Route::post('', [PostController::class, 'store']);
 });
