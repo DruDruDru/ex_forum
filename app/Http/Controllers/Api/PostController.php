@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
+use App\Http\Resources\PostResource;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         return response()->json([
-            'data' => $this->postService->getAll()
+            'data' => PostResource::collection($this->postService->getAll())
         ]);
     }
 
@@ -28,7 +29,7 @@ class PostController extends Controller
     {
         if ($post = $this->postService->get($id)) {
             return response()->json([
-                'data' => $post
+                'data' => PostResource::make($post)
             ]);
         }
         return response()->json([
@@ -39,7 +40,7 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         return response()->json([
-            'data' => $this->postService->create($request)
+            'data' => PostResource::make($this->postService->create($request))
         ]);
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\GradeController;
 
 Route::group([
     'prefix' => 'users'
@@ -42,4 +43,11 @@ Route::group([
 ], function () {
     Route::match(['patch', 'put'], '{comment_id}', [CommentController::class, 'update']);
     Route::delete('{comment_id}', [CommentController::class, 'delete']);
+});
+
+Route::group([
+    'prefix' => 'posts/{post_id}/grades',
+    'middleware' => 'auth.api'
+], function () {
+    Route::post('', [GradeController::class, 'store']);
 });
