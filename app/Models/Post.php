@@ -23,6 +23,16 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Grade::class)->where('rating', 1);
+    }
+
+    public function dislikes()
+    {
+        return $this->hasMany(Grade::class)->where('rating', -1);
+    }
+
     public static function posses($id): bool
     {
         if (preg_match('/^[0-9]*$/', $id) &&

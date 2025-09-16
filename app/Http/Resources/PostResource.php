@@ -22,7 +22,9 @@ class PostResource extends JsonResource
             'user' => $this->user()->first(),
             'comments' => $this->comments()->with('user')->get(),
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
+            'likes' => $this->likes()->count(),
+            'dislikes' => $this->dislikes()->count(),
         ];
     }
 }
