@@ -3,17 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 
-class Grade extends Model
+class Subscription extends Model
 {
     protected $fillable = [
-        'rating', 'user_id', 'post_id'
+        'subscriber_id', 'creator_id'
     ];
 
     public $timestamps = false;
-    public $incrementing = false;
-    protected $primaryKey = ['user_id', 'post_id'];
 
     protected static function boot()
     {

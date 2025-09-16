@@ -55,4 +55,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+    public static function posses($id): bool
+    {
+        if (preg_match('/^[0-9]*$/', $id) &&
+            static::where('id', $id)->exists()) {
+            return true;
+        }
+        return false;
+    }
 }

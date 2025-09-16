@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\GradeController;
+use App\Http\Controllers\Api\SubscriptionController;
 
 Route::group([
     'prefix' => 'users'
@@ -51,3 +52,11 @@ Route::group([
 ], function () {
     Route::post('', [GradeController::class, 'store']);
 });
+
+Route::group([
+    'prefix' => 'users/{creator_id}/subscriptions',
+    'middleware' => 'auth.api'
+], function () {
+    Route::post('', [SubscriptionController::class, 'store']);
+});
+
