@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
+use App\Http\Requests\SendCodeAgainRequest;
 use App\Http\Requests\VerifyCodeRequest;
 use App\Services\AuthService;
 use Illuminate\Support\Facades\Auth;
@@ -42,5 +43,13 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Неверный код подтверждения'
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function sendCodeAgain(SendCodeAgainRequest $request)
+    {
+        $this->authService->sendCodeAgain($request);
+        return response()->json([
+            'message' => 'На вашу почту отправлен код подтверждения'
+        ]);
     }
 }

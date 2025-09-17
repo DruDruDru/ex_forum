@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class VerifyCodeRequest extends FormRequest
+class SendCodeAgainRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,6 @@ class VerifyCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'required|integer|digits:6',
             'email' => 'required|max:255|email|in:'.implode(',', User::pluck('email')->toArray())
         ];
     }

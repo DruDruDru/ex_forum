@@ -20,6 +20,7 @@ Route::group([
     Route::post('/login', [AuthController::class, 'login'])
         ->middleware('login');
     Route::post('/verify', [AuthController::class, 'verifyCode']);
+    Route::post('/send_code_again', [AuthController::class, 'sendCodeAgain']);
 });
 
 Route::group([

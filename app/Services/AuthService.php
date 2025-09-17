@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Http\Requests\AuthRequest;
+use App\Http\Requests\SendCodeAgainRequest;
 use App\Http\Requests\VerifyCodeRequest;
+use App\Jobs\SendEmailJob;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 
@@ -40,5 +42,16 @@ class AuthService
             return true;
         }
         return false;
+    }
+
+    public function sendCodeAgain(SendCodeAgainRequest $request)
+    {
+        $email = $request->input('email');
+
+        $code = rand(100000, 999999);
+
+        Cache::put("email_verification:$email", $code, 300);
+
+        SendEmailJob::dispatch($email, $code);
     }
 }
