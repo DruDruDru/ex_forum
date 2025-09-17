@@ -21,7 +21,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         return response()->json([
-            'data' => PostResource::collection($this->postService->getAll())
+            'data' => PostResource::collection($this->postService->getAll($request))
         ]);
     }
 

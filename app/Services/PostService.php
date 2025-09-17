@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,9 +17,13 @@ class PostService
         $this->post = $post;
     }
 
-    public function getAll()
+    public function getAll(Request $request)
     {
-        return $this->post::all();
+        return match ($request->input('only')) {
+            'subscriptions' => $this->post->subscriptions()->get(),
+            'liked' => $this->post->liked()->get(),
+            default => $this->post->all(),
+        };
     }
 
     public function get($id)

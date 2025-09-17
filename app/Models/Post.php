@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Post extends Model
 {
@@ -31,6 +32,21 @@ class Post extends Model
     public function dislikes()
     {
         return $this->hasMany(Grade::class)->where('rating', -1);
+    }
+
+    public function scopeSubscriptions($query)
+    {
+        $creatorIds = Subscription::where('subscriber_id', Auth::id())
+                    ->pluck('creator_id')->toArray();
+        return $query->whereIn('user_id', $creatorIds);
+    }
+
+    public function scopeLiked($query)
+    {
+        $postIds = Grade::where('rating', 1)
+                        ->where('user_id', Auth::id())
+                        ->pluck('post_id')->toArray();
+        return $query->whereIn('id', $postIds);
     }
 
     public static function posses($id): bool
