@@ -21,6 +21,8 @@ Route::group([
         ->middleware('login');
     Route::post('/verify', [AuthController::class, 'verifyCode']);
     Route::post('/send_code_again', [AuthController::class, 'sendCodeAgain']);
+    Route::post('/reset_password/send_code', [AuthController::class, 'passwordResetSendCode']);
+    Route::post('/reset_password/verify', [AuthController::class, 'passwordResetVerify']);
 });
 
 Route::group([

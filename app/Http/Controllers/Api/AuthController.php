@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
+use App\Http\Requests\PasswordResetSendCodeRequest;
+use App\Http\Requests\PasswordResetVerifyRequest;
 use App\Http\Requests\SendCodeAgainRequest;
 use App\Http\Requests\VerifyCodeRequest;
 use App\Services\AuthService;
@@ -51,5 +53,25 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'На вашу почту отправлен код подтверждения'
         ]);
+    }
+
+    public function passwordResetSendCode(PasswordResetSendCodeRequest $request)
+    {
+        $this->authService->passwordResetSendCode($request);
+        return response()->json([
+            'message' => 'На почту отправлен код для сброса пароля'
+        ]);
+    }
+
+    public function passwordResetVerify(PasswordResetVerifyRequest $request)
+    {
+        if ($this->authService->passwordResetVerify($request)) {
+            return response()->json([
+                'message' => 'Пароль изменён'
+            ]);
+        }
+        return response()->json([
+            'message' => 'Неверный код подтверждения'
+        ], Response::HTTP_BAD_REQUEST);
     }
 }
