@@ -9,6 +9,7 @@ use App\Http\Requests\PasswordResetVerifyRequest;
 use App\Http\Requests\SendCodeAgainRequest;
 use App\Http\Requests\VerifyCodeRequest;
 use App\Services\AuthService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -73,5 +74,13 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Неверный код подтверждения'
         ], Response::HTTP_BAD_REQUEST);
+    }
+
+    public function logout(Request $request)
+    {
+        $this->authService->logout($request);
+        return response()->json([
+            'message' => 'Успешный выход'
+        ]);
     }
 }

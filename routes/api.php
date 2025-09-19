@@ -9,13 +9,15 @@ use App\Http\Controllers\Api\GradeController;
 use App\Http\Controllers\Api\SubscriptionController;
 
 Route::group([
-    'prefix' => 'users'
+    'prefix' => 'users',
+    'middleware' => 'guest.api'
 ], function () {
     Route::post('', [UserController::class, 'store']);
 });
 
 Route::group([
-    'prefix' => 'auth'
+    'prefix' => 'auth',
+    'middleware' => 'guest.api'
 ], function () {
     Route::post('/login', [AuthController::class, 'login'])
         ->middleware('login');
@@ -23,6 +25,9 @@ Route::group([
     Route::post('/send_code_again', [AuthController::class, 'sendCodeAgain']);
     Route::post('/reset_password/send_code', [AuthController::class, 'passwordResetSendCode']);
     Route::post('/reset_password/verify', [AuthController::class, 'passwordResetVerify']);
+    Route::post('/logout', [AuthController::class, 'logout'])
+        ->withoutMiddleware('guest.api')
+        ->middleware('auth.api');
 });
 
 Route::group([

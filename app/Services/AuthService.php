@@ -9,6 +9,7 @@ use App\Http\Requests\SendCodeAgainRequest;
 use App\Http\Requests\VerifyCodeRequest;
 use App\Jobs\SendEmailJob;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class AuthService
@@ -74,7 +75,7 @@ class AuthService
 
         $code = Cache::get("password_reset:$email");
 
-        if ($code === $request->input('code')) {
+        if ((int)$code === $request->input('code')) {
             $user = $this->user->where('email', $email)->firstOrFail();
             $user->password_reset_at = now();
             $user->password = $request->input('new_password');
@@ -84,5 +85,10 @@ class AuthService
         }
 
         return false;
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
     }
 }
