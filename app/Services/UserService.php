@@ -3,10 +3,8 @@
 namespace App\Services;
 
 use App\Jobs\SendEmailJob;
-use App\Mail\EmailVerificationMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Mail;
 class UserService
 {
     protected $user;

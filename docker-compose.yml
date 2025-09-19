@@ -30,3 +30,12 @@ services:
         volumes:
             - ./:/var/www/
         container_name: ex_backend
+    redis:
+        image: redis:latest
+        command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+        ports:
+            - '6379:6379'
+        volumes:
+            - ./database/redis_data/:/data
+            - ./.deploy/redis/redis.conf:/usr/local/etc/redis/redis.conf
+        container_name: ex_redis

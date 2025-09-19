@@ -1,1 +1,3 @@
 *.sqlite*
+pg_db
+redis_data

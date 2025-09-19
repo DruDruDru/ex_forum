@@ -35,7 +35,7 @@ class AuthService
 
         $code = Cache::get("email_verification:$email");
 
-        if ($code === $request->input('code')) {
+        if ((int)$code === $request->input('code')) {
             $user = $this->user->where('email', $email)->firstOrFail();
             $user->email_verified_at = now();
             $user->save();
