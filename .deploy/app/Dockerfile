@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
       libzip-dev \
       redis-tools \
       zip unzip && \
-      docker-php-ext-install pdo pdo_pgsql
+      docker-php-ext-install pdo pdo_pgsql \
+      pcntl
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN curl -sS https://getcomposer.org/installer | php -- \

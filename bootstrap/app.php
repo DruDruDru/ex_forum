@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth.api' => ApiAuthMiddleware::class,
             'guest.api' => GuestMiddleware::class
         ]);
+        $middleware->api('throttle:50,1');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
