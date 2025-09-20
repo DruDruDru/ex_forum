@@ -18,7 +18,7 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'content' => $this->content,
-            'image_path' => $this->image_path,
+            'file_path' => $this->file_path,
             'user' => $this->user()->first(),
             'comments' => $this->comments()->with('user')->get(),
             'created_at' => $this->created_at,

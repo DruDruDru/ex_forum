@@ -29,6 +29,7 @@ services:
             - db
         volumes:
             - ./:/var/www/
+            - ./.deploy/app/php.ini/:/usr/local/etc/php/conf.d/php.ini
         container_name: ex_backend
     redis:
         image: redis:latest

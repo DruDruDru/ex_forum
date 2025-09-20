@@ -35,16 +35,16 @@ class PostService
 
     public function create(PostRequest $request)
     {
-        if ($image = $request->file('image')) {
-            $filename = uuid_create().'_'.$image->getClientOriginalName();
+        if ($file = $request->file('file')) {
+            $filename = uuid_create().'_'.$file->getClientOriginalName();
 
-            $path = $image->storeAs("posts", $filename, 'public');
+            $path = $file->storeAs("posts", $filename, 'public');
         }
 
         return $this->post::create([
             ...$request->all(),
             'user_id' => Auth::id(),
-            'image_path' => isset($path) ? Storage::url($path) : null
+            'file_path' => isset($path) ? Storage::url($path) : null
         ]);
     }
 }
